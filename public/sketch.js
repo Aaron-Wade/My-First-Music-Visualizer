@@ -1,8 +1,9 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts" />
 
+let canvas;
 let song;
 let songVolume = 1;
-let cellSize;
+let cellSize = 175;
 let pad = 10;
 let xbound;
 let ybound;
@@ -14,11 +15,10 @@ function preload() {
 }
 
 function setup() {
-	let canvas = createCanvas(windowWidth, windowHeight);
+	canvas = createCanvas(windowWidth, windowHeight);
 	canvas.mousePressed(togglePlay);
 	song.setVolume(songVolume)
 	amp = new p5.Amplitude();
-	cellSize = width / 10;
 	xbound = width + cellSize;
 	ybound = height - (height % cellSize);
 	pad = width / 30;
@@ -38,6 +38,10 @@ function draw() {
 		floaters[i].display();
 		floaters[i].move();
 	}
+}
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
 }
 
 function togglePlay() {
