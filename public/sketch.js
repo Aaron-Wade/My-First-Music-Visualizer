@@ -18,10 +18,10 @@ function setup() {
 	canvas.mousePressed(togglePlay);
 	song.setVolume(songVolume)
 	amp = new p5.Amplitude();
-	cellSize = windowWidth / 10;
-	xbound = windowWidth + cellSize;
-	ybound = windowHeight + cellSize;
-	pad = windowWidth / 30;
+	cellSize = width / 10;
+	xbound = width + cellSize;
+	ybound = height - (height % cellSize);
+	pad = width / 30;
 
 	for (let x = 0; x < xbound; x+=cellSize) {
 		for (let y = 0; y < ybound; y+=cellSize) {
@@ -35,8 +35,8 @@ function setup() {
 function draw() {
 	background(30)
 	for (let i = 0; i < floaters.length; i++) {
-		floaters[i].move();
 		floaters[i].display();
+		floaters[i].move();
 	}
 }
 
@@ -79,10 +79,11 @@ class Floater {
 			d = this.diameter
 		}
 
-		let floaterColor = color(255)
-		floaterColor.setAlpha(map(this.y, 0, windowHeight, 255, 20))
-		fill(floaterColor)
+		let floaterColor = color(255);
+		floaterColor.setAlpha(map(this.y, 0, height, 255, 20));
+		fill(floaterColor);
 
+		ellipseMode(CENTER);
 		ellipse(this.x, this.y, d, d);
 	}
 }
